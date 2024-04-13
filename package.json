@@ -5,7 +5,11 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@colyseus/monitor": "^0.15.6",
+    "@colyseus/playground": "^0.15.12",
+    "@colyseus/tools": "^0.15.36",
     "axios": "^1.6.0",
+    "colyseus": "^0.15.15",
     "colyseus.js": "^0.15.18",
     "express": "^4.18.1",
     "react": "18.2.0",
@@ -13,6 +17,8 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@colyseus/loadtest": "^0.15.2",
+    "@colyseus/testing": "^0.15.3",
     "@nx/cypress": "18.2.4",
     "@nx/eslint": "18.2.4",
     "@nx/eslint-plugin": "18.2.4",
