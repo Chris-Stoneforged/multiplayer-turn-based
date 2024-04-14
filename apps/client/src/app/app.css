@@ -4,8 +4,17 @@
   text-align: center;
 }
 
-.join_match_container {
+.match_container {
+  display: flex;
   align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.info_text {
+  color: white;
+  font-size: 16px;
+  text-align: center;
 }
 
 .join_match_button {
