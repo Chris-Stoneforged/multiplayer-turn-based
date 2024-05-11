@@ -1,11 +1,10 @@
 import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
-import { CharacterState } from '../schemas/characterState';
 import gameConfig from '../game/config/gameConfig';
 
 export class MatchRoom extends Room<MatchState> {
   maxClients = gameConfig.numPlayers;
-  playerIds: string[];
+  currentClients = 0;
 
   onCreate() {
     this.setState(new MatchState(gameConfig));
@@ -23,22 +22,22 @@ export class MatchRoom extends Room<MatchState> {
     this.state.registerPlayer(client.sessionId);
     this.state.spawnCharacter(client.sessionId, options.config);
 
-    // Need all players to join for the match to start
-    if (this.state.players.length === this.maxClients) {
+    this.currentClients++;
+    if (this.currentClients == this.maxClients) {
       this.state.startMatch();
     }
   }
 
   onEndTurn(client: Client, data: any) {
-    if (client.sessionId !== this.state.currentTurn) {
+    if (!this.state.turnState.isPlayersTurn(client.sessionId)) {
       return;
     }
 
-    this.state.nextCharacterTurn();
+    this.state.turnState.endCurrentTurn();
   }
 
   onUseAction(client: Client, { abilityId, target }) {
-    if (client.sessionId !== this.state.currentTurn) {
+    if (!this.state.turnState.isPlayersTurn(client.sessionId)) {
       return;
     }
 

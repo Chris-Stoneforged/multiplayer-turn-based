@@ -16,6 +16,7 @@ export class CharacterState extends Schema {
 
     this.owner = owner;
     this.health = config.maxHealth;
+    this.id = `${owner}_${config.name}`;
 
     // Create Actions from Id
     config.actions.forEach((actionId) => {
