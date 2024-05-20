@@ -39,7 +39,6 @@ export default class TurnState extends Schema {
   onCharacterSpawned(character: CharacterState) {
     const turnCharacters = this.charactersByPlayer.get(character.owner);
     if (turnCharacters) {
-      console.log('added');
       turnCharacters.push(character.id);
     }
   }
@@ -74,16 +73,10 @@ export default class TurnState extends Schema {
   }
 
   private setTurn() {
-    console.log(this.playerTurnIndex);
-    console.log(this.players);
     this.currentPlayerTurn = this.players[this.playerTurnIndex];
-    console.log(this.currentPlayerTurn);
-    console.log(this.charactersByPlayer);
     const currentTurnCharacters = this.charactersByPlayer.get(
       this.currentPlayerTurn
     );
-    console.log(currentTurnCharacters);
-    console.log(this.characterTurnIndex);
     this.currentCharacterTurn = currentTurnCharacters[this.characterTurnIndex];
   }
 }

@@ -36,11 +36,13 @@ export class MatchRoom extends Room<MatchState> {
     this.state.turnState.endCurrentTurn();
   }
 
-  onUseAction(client: Client, { abilityId, target }) {
+  onUseAction(client: Client, { abilityId, targetData }) {
     if (!this.state.turnState.isPlayersTurn(client.sessionId)) {
-      return;
+      throw new Error('Client cannot take this action, not their turn');
     }
 
-    // Use action
+    this.state.characters
+      .get(this.state.turnState.currentCharacterTurn)
+      .castAction(abilityId, targetData);
   }
 }

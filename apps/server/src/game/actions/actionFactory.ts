@@ -1,5 +1,5 @@
 import { MatchState } from '../../schemas/matchState';
-import Action from './action';
+import Action from '../../schemas/actionState';
 import Fireball from './fireball';
 
 export function createActionFromId(id: number, match: MatchState): Action {
