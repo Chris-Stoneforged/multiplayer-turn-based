@@ -8,6 +8,8 @@
     "@colyseus/monitor": "^0.15.6",
     "@colyseus/playground": "^0.15.12",
     "@colyseus/tools": "^0.15.36",
+    "@nrwl/node": "^19.0.4",
+    "@nrwl/workspace": "^19.0.4",
     "axios": "^1.6.0",
     "colyseus": "^0.15.15",
     "colyseus.js": "^0.15.18",

@@ -1,12 +1,14 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
 import EventEmitter from 'events';
-import { GameConfig } from '../game/config/gameConfig';
 import GameEvents from '../game/gameEvents';
 import { CharacterConfig } from '../game/config/characterConfig';
 import { CharacterState } from './characterState';
 import TurnState from '../game/turnState';
+import { PlayerState } from './playerState';
+import { GameConfig } from '@multiplayer-turn-based/common';
 
 export class MatchState extends Schema {
+  @type({ map: PlayerState }) players = new MapSchema<PlayerState>();
   @type({ map: CharacterState }) characters = new MapSchema<CharacterState>();
   @type(TurnState) turnState: TurnState;
 
@@ -19,6 +21,7 @@ export class MatchState extends Schema {
   }
 
   registerPlayer(id: string) {
+    this.players.set(id, new PlayerState(id));
     this.events.emit(GameEvents.OnPlayerJoined, id);
   }
 

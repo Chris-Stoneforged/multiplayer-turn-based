@@ -1,13 +1,13 @@
 import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
-import gameConfig from '../game/config/gameConfig';
+import gameConfig from '@multiplayer-turn-based/common';
 
 export class MatchRoom extends Room<MatchState> {
   maxClients = gameConfig.numPlayers;
   currentClients = 0;
 
   onCreate() {
-    this.setState(new MatchState(gameConfig));
+    this.setState(new MatchState(null));
     this.onMessage('end_turn', (client, message) => {
       this.onEndTurn(client, message);
     });
