@@ -1,6 +1,7 @@
-export type GameConfig = {
-  numPlayers: number;
-};
+import { GameConfig } from './gameConfig';
+
+export * from './gameDefinitions';
+export * from './gameConfig';
 
 const gameConfig: GameConfig = {
   numPlayers: 2,

@@ -1,7 +1,7 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
 import { EventEmitter } from 'stream';
-import GameEvents from './gameEvents';
-import { CharacterState } from '../schemas/characterState';
+import GameEvents from '../game/gameEvents';
+import { CharacterState } from './characterState';
 
 export default class TurnState extends Schema {
   @type('string') currentCharacterTurn: string;

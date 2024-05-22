@@ -11,7 +11,7 @@ export function resolveTargets(
 ): CharacterState[] {
   const validTargets = getValidTargetsFromConfig(
     caster,
-    game.characters,
+    game.allCharacters,
     targetConfig
   );
   switch (targetConfig.targetType) {
@@ -34,13 +34,10 @@ export function resolveTargets(
 
 function getValidTargetsFromConfig(
   caster: CharacterState,
-  characters: MapSchema<CharacterState>,
+  characters: CharacterState[],
   config: TargetConfig
 ): CharacterState[] {
-  const allCharacters = Array.from(characters).map(
-    (characterPair) => characterPair[1]
-  );
-  const validCharacters = allCharacters
+  const validCharacters = characters
     .filter((character) => filterCharacterClass(character, config.targetClass))
     .filter((character) =>
       filterCharacterAlliance(caster, character, config.targetAlliance)

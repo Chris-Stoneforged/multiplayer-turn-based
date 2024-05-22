@@ -3,15 +3,15 @@ import EventEmitter from 'events';
 import GameEvents from '../game/gameEvents';
 import { CharacterConfig } from '../game/config/characterConfig';
 import { CharacterState } from './characterState';
-import TurnState from '../game/turnState';
+import TurnState from './turnState';
 import { PlayerState } from './playerState';
 import { GameConfig } from '@multiplayer-turn-based/common';
 
 export class MatchState extends Schema {
   @type({ map: PlayerState }) players = new MapSchema<PlayerState>();
-  @type({ map: CharacterState }) characters = new MapSchema<CharacterState>();
   @type(TurnState) turnState: TurnState;
 
+  allCharacters: CharacterState[] = [];
   events: EventEmitter = new EventEmitter();
 
   constructor(config: GameConfig) {
@@ -27,7 +27,12 @@ export class MatchState extends Schema {
 
   spawnCharacter(owner: string, config: CharacterConfig) {
     const character = new CharacterState(this, owner, config);
-    this.characters.set(`${owner}_${config.name}`, character);
+
+    this.players
+      .get(owner)
+      .characters.set(`${owner}_${config.name}`, character);
+    this.allCharacters.push(character);
+
     this.events.emit(GameEvents.OnCharacterSpawned, character);
   }
 

@@ -41,8 +41,9 @@ export class MatchRoom extends Room<MatchState> {
       throw new Error('Client cannot take this action, not their turn');
     }
 
-    this.state.characters
-      .get(this.state.turnState.currentCharacterTurn)
+    this.state.players
+      .get(client.sessionId)
+      .characters.get(this.state.turnState.currentCharacterTurn)
       .castAction(abilityId, targetData);
   }
 }
