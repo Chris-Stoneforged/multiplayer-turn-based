@@ -1,9 +1,10 @@
-import { Schema, MapSchema, type } from '@colyseus/schema';
+import { Schema, type } from '@colyseus/schema';
 import { EventEmitter } from 'stream';
 import GameEvents from '../game/gameEvents';
 import { CharacterState } from './characterState';
+import { ITurnState } from '@multiplayer-turn-based/common';
 
-export default class TurnState extends Schema {
+export default class TurnState extends Schema implements ITurnState {
   @type('string') currentCharacterTurn: string;
   @type('string') currentPlayerTurn: string;
 

@@ -1,6 +1,6 @@
 import { GameConfig } from './gameConfig';
 
-export * from './gameDefinitions';
+export * from './stateDefinitions';
 export * from './gameConfig';
 
 const gameConfig: GameConfig = {

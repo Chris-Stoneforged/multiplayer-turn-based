@@ -1,0 +1,15 @@
+.end_turn_button {
+  width: 130px;
+  height: 40px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  border: 2px solid black;
+}
+
+.end_turn_button:disabled {
+  background-color: #b2b2b2;
+}

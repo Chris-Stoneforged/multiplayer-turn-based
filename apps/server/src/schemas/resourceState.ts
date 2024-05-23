@@ -1,7 +1,7 @@
 import { Schema, type } from '@colyseus/schema';
-import { IResource } from '@multiplayer-turn-based/common';
+import { IResourceState } from '@multiplayer-turn-based/common';
 
-export default class ResourceState extends Schema implements IResource {
+export default class ResourceState extends Schema implements IResourceState {
   @type('number') maxValue: number;
   @type('number') currentValue: number;
 

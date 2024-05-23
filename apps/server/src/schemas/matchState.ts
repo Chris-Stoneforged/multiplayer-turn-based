@@ -5,9 +5,9 @@ import { CharacterConfig } from '../game/config/characterConfig';
 import { CharacterState } from './characterState';
 import TurnState from './turnState';
 import { PlayerState } from './playerState';
-import { GameConfig } from '@multiplayer-turn-based/common';
+import { GameConfig, IMatchState } from '@multiplayer-turn-based/common';
 
-export class MatchState extends Schema {
+export class MatchState extends Schema implements IMatchState {
   @type({ map: PlayerState }) players = new MapSchema<PlayerState>();
   @type(TurnState) turnState: TurnState;
 

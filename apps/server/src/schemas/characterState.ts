@@ -1,13 +1,13 @@
-import { Schema, MapSchema, type } from '@colyseus/schema';
+import { Schema, type } from '@colyseus/schema';
 import { CharacterConfig, CharacterType } from '../game/config/characterConfig';
 import { MatchState } from './matchState';
 import Action from './actionState';
 import { createActionFromId } from '../game/actions/actionFactory';
 import { TargetData } from '../game/targeting/targetTypes';
-import { ICharacter } from 'common/src/gameDefinitions';
+import { ICharacterState } from '@multiplayer-turn-based/common';
 import ResourceState from './resourceState';
 
-export class CharacterState extends Schema implements ICharacter {
+export class CharacterState extends Schema implements ICharacterState {
   @type('string') name: string;
   @type(ResourceState) health: ResourceState;
 

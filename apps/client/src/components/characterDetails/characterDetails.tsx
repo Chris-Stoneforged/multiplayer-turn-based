@@ -1,14 +1,14 @@
 import React from 'react';
 import './characterDetails.css';
-import { ICharacter } from 'common/src/gameDefinitions';
 import Portait from '../../assets/placeholder_portrait.png';
 import HealthBar from './healthBar';
+import { ICharacterState } from '@multiplayer-turn-based/common';
 
-type characterDetailsProps = {
-  character: ICharacter;
+type CharacterDetailsProps = {
+  character: ICharacterState;
 };
 
-export default function characterDetails({ character }: characterDetailsProps) {
+export default function characterDetails({ character }: CharacterDetailsProps) {
   return (
     <div>
       <div>

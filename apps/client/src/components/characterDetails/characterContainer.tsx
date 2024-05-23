@@ -1,9 +1,9 @@
 import React from 'react';
-import ICharacter from 'common/src/definitions/character';
 import CharacterDetails from './characterDetails';
+import { ICharacterState } from '@multiplayer-turn-based/common';
 
 type CharacterContainerProps = {
-  characters: Map<string, ICharacter>;
+  characters: Map<string, ICharacterState>;
 };
 
 export default function characterContainer({
@@ -13,8 +13,8 @@ export default function characterContainer({
 
   return (
     <div>
-      {characterArray.map((character) => (
-        <li>
+      {characterArray.map((character: ICharacterState) => (
+        <li key={character.name}>
           <CharacterDetails character={character}></CharacterDetails>
         </li>
       ))}

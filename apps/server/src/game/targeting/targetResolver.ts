@@ -1,7 +1,7 @@
 import { MapSchema } from '@colyseus/schema';
+import { TargetAlliance, TargetClass, TargetConfig } from './targetTypes';
 import { CharacterState } from '../../schemas/characterState';
 import { MatchState } from '../../schemas/matchState';
-import { TargetAlliance, TargetClass, TargetConfig } from './targetTypes';
 
 export function resolveTargets(
   game: MatchState,

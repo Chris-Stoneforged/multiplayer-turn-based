@@ -1,8 +1,8 @@
-import { IPlayer } from '@multiplayer-turn-based/common';
+import { IPlayerState } from '@multiplayer-turn-based/common';
 import React from 'react';
 
 type PlayerDetailsProps = {
-  player: IPlayer;
+  player: IPlayerState;
 };
 
 export default function PlayerDetails({ player }: PlayerDetailsProps) {
