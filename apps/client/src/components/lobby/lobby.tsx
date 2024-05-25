@@ -14,12 +14,14 @@ export default function Lobby({ matchJoinedCallback }: LobbyProps) {
 
   // TODO: Turnt this into a form of sorts
   const joinOptions = {
-    config: {
-      name: 'Bob',
-      type: 'Hero',
-      maxHealth: 10,
-      actions: [0],
-    },
+    config: [
+      {
+        name: 'Bob',
+        type: 'Hero',
+        maxHealth: 10,
+        actions: ['fireball', 'icebolt'],
+      },
+    ],
   };
 
   const joinMatch = async () => {

@@ -1,4 +1,5 @@
 import { IPlayerState } from '@multiplayer-turn-based/common';
+import './playerDetails.css';
 import React from 'react';
 
 type PlayerDetailsProps = {
@@ -6,5 +7,5 @@ type PlayerDetailsProps = {
 };
 
 export default function PlayerDetails({ player }: PlayerDetailsProps) {
-  return <div>{player.name}</div>;
+  return <div className="player_name">{player.name}</div>;
 }

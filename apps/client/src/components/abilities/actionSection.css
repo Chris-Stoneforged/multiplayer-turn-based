@@ -1,0 +1,14 @@
+.action_section {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.action_list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}

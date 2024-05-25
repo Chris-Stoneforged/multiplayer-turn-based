@@ -6,16 +6,20 @@ import { ICharacterState } from '@multiplayer-turn-based/common';
 
 type CharacterDetailsProps = {
   character: ICharacterState;
+  alighnLeft: boolean;
 };
 
-export default function characterDetails({ character }: CharacterDetailsProps) {
+export default function characterDetails({
+  character,
+  alighnLeft: alightLeft,
+}: CharacterDetailsProps) {
   return (
-    <div>
+    <div className="details_container">
+      <img src={Portait} alt="" className="portrait_image" />
       <div>
         {character.name}
-        <img src={Portait} alt="" className="portrait_image" />
+        <HealthBar health={character.health} alighnLeft={alightLeft} />
       </div>
-      <HealthBar health={character.health} />
     </div>
   );
 }

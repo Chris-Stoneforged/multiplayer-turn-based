@@ -1,11 +1,14 @@
 import { MatchState } from '../../schemas/matchState';
-import Action from '../../schemas/actionState';
+import ActionState from '../../schemas/actionState';
 import Fireball from './fireball';
+import Icebolt from './icebolt';
 
-export function createActionFromId(id: number, match: MatchState): Action {
+export function createActionFromId(id: string, match: MatchState): ActionState {
   switch (id) {
-    case 0:
+    case 'fireball':
       return new Fireball(match);
+    case 'icebolt':
+      return new Icebolt(match);
   }
 
   return null;

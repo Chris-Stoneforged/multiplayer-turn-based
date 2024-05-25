@@ -4,5 +4,5 @@ export type CharacterConfig = {
   name: string;
   type: CharacterType;
   maxHealth: number;
-  actions: number[];
+  actions: string[];
 };

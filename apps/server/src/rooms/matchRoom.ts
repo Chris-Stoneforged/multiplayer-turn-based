@@ -1,6 +1,7 @@
 import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
 import gameConfig from '@multiplayer-turn-based/common';
+import { CharacterConfig } from '../game/config/characterConfig';
 
 export class MatchRoom extends Room<MatchState> {
   maxClients = gameConfig.numPlayers;
@@ -9,10 +10,10 @@ export class MatchRoom extends Room<MatchState> {
   onCreate() {
     this.setState(new MatchState(null));
     this.onMessage('end_turn', (client, message) => {
-      this.onEndTurn(client, message);
+      this.handleEndTurn(client, message);
     });
     this.onMessage('use_action', (client, message) => {
-      this.onUseAction(client, message);
+      this.handleCastAction(client, message);
     });
   }
 
@@ -20,7 +21,9 @@ export class MatchRoom extends Room<MatchState> {
     console.log(`Client ${client.sessionId} joined`);
 
     this.state.registerPlayer(client.sessionId);
-    this.state.spawnCharacter(client.sessionId, options.config);
+    options.config.forEach((config: CharacterConfig) => {
+      this.state.spawnCharacter(client.sessionId, config);
+    });
 
     this.currentClients++;
     if (this.currentClients == this.maxClients) {
@@ -28,7 +31,7 @@ export class MatchRoom extends Room<MatchState> {
     }
   }
 
-  onEndTurn(client: Client, data: any) {
+  handleEndTurn(client: Client, data: any) {
     if (!this.state.turnState.isPlayersTurn(client.sessionId)) {
       return;
     }
@@ -36,7 +39,7 @@ export class MatchRoom extends Room<MatchState> {
     this.state.turnState.endCurrentTurn();
   }
 
-  onUseAction(client: Client, { abilityId, targetData }) {
+  handleCastAction(client: Client, { actionId, targetData }) {
     if (!this.state.turnState.isPlayersTurn(client.sessionId)) {
       throw new Error('Client cannot take this action, not their turn');
     }
@@ -44,6 +47,6 @@ export class MatchRoom extends Room<MatchState> {
     this.state.players
       .get(client.sessionId)
       .characters.get(this.state.turnState.currentCharacterTurn)
-      .castAction(abilityId, targetData);
+      .castAction(actionId, targetData);
   }
 }

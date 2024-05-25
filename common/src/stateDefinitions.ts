@@ -13,6 +13,7 @@ interface ISchema {
 export interface ICharacterState extends ISchema {
   name: string;
   health: IResourceState;
+  actions: Map<string, IActionState>;
 }
 
 export interface IPlayerState {
@@ -27,9 +28,15 @@ export interface IResourceState extends ISchema {
 
 export interface IMatchState extends ISchema {
   players: Map<string, IPlayerState>;
+  turnState: ITurnState;
 }
 
 export interface ITurnState extends ISchema {
   currentPlayerTurn: string;
   currentCharacterTurn: string;
+}
+
+export interface IActionState extends ISchema {
+  id: string;
+  cooldown: number;
 }

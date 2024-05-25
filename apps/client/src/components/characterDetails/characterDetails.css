@@ -3,4 +3,11 @@
   height: 64px;
   border: 2px solid black;
   border-radius: 3px;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.details_container {
+  display: flex;
+  margin-bottom: 6px;
 }

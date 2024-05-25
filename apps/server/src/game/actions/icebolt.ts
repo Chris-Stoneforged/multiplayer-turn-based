@@ -2,8 +2,8 @@ import { CharacterState } from '../../schemas/characterState';
 import { TargetConfig } from '../targeting/targetTypes';
 import ActionState from '../../schemas/actionState';
 
-export default class Fireball extends ActionState {
-  id = 'fireball';
+export default class Icebolt extends ActionState {
+  id = 'icebolt';
   damageAmount = 5;
   targetConfig: TargetConfig = {
     targetType: 'All',

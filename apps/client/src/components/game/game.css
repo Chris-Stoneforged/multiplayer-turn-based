@@ -1,12 +1,20 @@
 .match_container {
   background-image: url('./../../assets/game-background.webp');
-  width: 90vw; /* 80% of the viewport width */
-  height: 90vh; /* 80% of the viewport height */
+  width: 90vw;
+  height: 90vh;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-size: contain; /* Ensure the image scales properly */
-  background-repeat: no-repeat; /* Prevent tiling */
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
+}
+
+.right_section {
+  direction: rtl;
+}
+
+.left_section {
+  direction: ltr;
 }

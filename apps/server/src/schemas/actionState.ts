@@ -3,12 +3,17 @@ import { TargetConfig, TargetData } from '../game/targeting/targetTypes';
 import { resolveTargets } from '../game/targeting/targetResolver';
 import { MatchState } from './matchState';
 import { CharacterState } from './characterState';
+import { IActionState } from '@multiplayer-turn-based/common';
 
-export default abstract class Action extends Schema {
+export default abstract class ActionState
+  extends Schema
+  implements IActionState
+{
+  @type('string') abstract id: string;
   @type('number') cooldown: number;
 
   protected abstract targetConfig: TargetConfig;
-  protected abstract name: string;
+
   protected game: MatchState;
 
   constructor(match: MatchState) {
