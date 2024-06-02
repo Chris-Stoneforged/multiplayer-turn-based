@@ -4,6 +4,7 @@ const GameEvents = {
   OnMatchStarted: 'match_started',
   OnTurnEnded: 'turn_ended',
   OnTurnStarted: 'turn_started',
+  OnCharacterDied: 'character_died',
 } as const;
 
 export default GameEvents;

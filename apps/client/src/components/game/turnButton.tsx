@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './turnButton.css';
-import { IMatchState } from '@multiplayer-turn-based/common';
-import { Room } from 'colyseus.js';
+import Match, { MatchContext } from '../../game/match';
 
-type TurnButtonProps = {
-  room: Room<IMatchState>;
-};
-
-export default function TurnButton({ room }: TurnButtonProps) {
+export default function TurnButton() {
+  const match: Match | undefined = useContext(MatchContext);
+  if (match === undefined) {
+    throw new Error();
+  }
   const [currentTurn, setCurrentTurn] = useState(
-    room.state.turnState.currentPlayerTurn
+    match.turnState.currentPlayerTurn
   );
 
   useEffect(() => {
-    const unListen = room.state.turnState.listen(
+    const unListen = match.turnState.listen(
       'currentPlayerTurn',
       (currentValue: any, previousValue: any) => {
-        console.log('turn changed');
         setCurrentTurn(currentValue);
       }
     );
@@ -26,16 +24,16 @@ export default function TurnButton({ room }: TurnButtonProps) {
   });
 
   const onTurnButtonClicked = () => {
-    room.send('end_turn');
+    match.sendMessage('end_turn');
   };
 
   return (
     <button
       className="end_turn_button"
       onClick={onTurnButtonClicked}
-      disabled={currentTurn !== room.sessionId}
+      disabled={currentTurn !== match.playerId}
     >
-      {currentTurn === room.sessionId ? 'End Turn' : 'Enemy Turn'}
+      {currentTurn === match.playerId ? 'End Turn' : 'Enemy Turn'}
     </button>
   );
 }

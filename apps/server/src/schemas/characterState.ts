@@ -6,15 +6,18 @@ import { createActionFromId } from '../game/actions/actionFactory';
 import { TargetData } from '../game/targeting/targetTypes';
 import { ICharacterState } from '@multiplayer-turn-based/common';
 import ResourceState from './resourceState';
+import GameEvents from '../game/gameEvents';
 
 export class CharacterState extends Schema implements ICharacterState {
   @type('string') name: string;
   @type(ResourceState) health: ResourceState;
   @type({ map: ActionState }) actions = new MapSchema<ActionState>();
+  @type('boolean') isAlive: boolean;
 
   id: string;
   owner: string;
   class: CharacterType;
+  match: MatchState;
 
   constructor(state: MatchState, owner: string, config: CharacterConfig) {
     super();
@@ -24,6 +27,8 @@ export class CharacterState extends Schema implements ICharacterState {
     this.health = new ResourceState(config.maxHealth);
     this.id = `${owner}_${config.name}`;
     this.class = config.type;
+    this.isAlive = true;
+    this.match = state;
 
     // Create Actions from Id
     config.actions.forEach((actionId) => {
@@ -42,5 +47,9 @@ export class CharacterState extends Schema implements ICharacterState {
 
   takeDamage(damage: number) {
     this.health.removeResource(damage);
+    if (this.health.currentValue <= 0) {
+      this.match.events.emit(GameEvents.OnCharacterDied, this);
+      this.isAlive = false;
+    }
   }
 }

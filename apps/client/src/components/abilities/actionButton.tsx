@@ -4,7 +4,7 @@ import { IActionState } from '@multiplayer-turn-based/common';
 import {
   ActionDefinition,
   getActionDefinitionById,
-} from '../../app/actionDefinitions/actionDefinition';
+} from '../../game/actionDefinitions/actionDefinition';
 
 type ActionButtonProps = {
   action: IActionState;

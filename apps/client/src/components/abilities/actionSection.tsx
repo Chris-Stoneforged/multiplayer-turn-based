@@ -1,30 +1,25 @@
 import './actionSection.css';
-import {
-  IActionState,
-  ICharacterState,
-  IMatchState,
-} from '@multiplayer-turn-based/common';
-import { Room } from 'colyseus.js';
-import React, { useEffect, useState } from 'react';
+import { IActionState, ICharacterState } from '@multiplayer-turn-based/common';
+import React, { useContext, useEffect, useState } from 'react';
 import ActionButton from './actionButton';
+import Match, { MatchContext } from '../../game/match';
 
-type ActionSectionProps = {
-  room: Room<IMatchState>;
-};
+export default function ActionSection() {
+  const match: Match | undefined = useContext(MatchContext);
+  if (match === undefined) {
+    throw new Error();
+  }
 
-export default function ActionSection({ room }: ActionSectionProps) {
   const [currentCharacter, setCurrentCharacter] = useState(
-    Array.from(room.state.players.get(room.sessionId)!.characters.keys())[0]
+    Array.from(match.playerCharacters.keys())[0]
   );
   const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
-    const unListen = room.state.turnState.listen(
+    const unListen = match.turnState.listen(
       'currentCharacterTurn',
       (current: string, previous: string) => {
-        const character = room.state.players
-          .get(room.sessionId)
-          ?.characters.get(current);
+        const character = match.playerCharacters.get(current);
         setEnabled(character !== undefined);
         if (character === undefined) {
           return;
@@ -38,7 +33,7 @@ export default function ActionSection({ room }: ActionSectionProps) {
   });
 
   const onButtonClick = (actionId: string) => {
-    room.send('use_action', {
+    match.sendMessage('use_action', {
       actionId: actionId,
       targetData: {
         selectedTargets: [],
@@ -46,9 +41,8 @@ export default function ActionSection({ room }: ActionSectionProps) {
     });
   };
 
-  const character: ICharacterState | undefined = room.state.players
-    .get(room.sessionId)
-    ?.characters.get(currentCharacter);
+  const character: ICharacterState | undefined =
+    match.playerCharacters.get(currentCharacter);
   if (character === undefined) {
     throw new Error('Character does not exist');
   }
