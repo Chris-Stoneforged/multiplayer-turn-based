@@ -1,29 +1,28 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
-import EventEmitter from 'events';
-import GameEvents from '../game/gameEvents';
 import { CharacterConfig } from '../game/config/characterConfig';
 import { CharacterState } from './characterState';
 import TurnState from './turnState';
 import { PlayerState } from './playerState';
 import { GameConfig, IMatchState } from '@multiplayer-turn-based/common';
+import MatchEventBus from '../game/gameEvents';
 
 export class MatchState extends Schema implements IMatchState {
   @type({ map: PlayerState }) players = new MapSchema<PlayerState>();
   @type(TurnState) turnState: TurnState;
 
   allCharacters: CharacterState[] = [];
-  events: EventEmitter;
+  events: MatchEventBus;
 
   constructor(config: GameConfig) {
     super();
 
-    this.events = new EventEmitter();
+    this.events = new MatchEventBus();
     this.turnState = new TurnState(this.events);
   }
 
   registerPlayer(id: string) {
     this.players.set(id, new PlayerState(id));
-    this.events.emit(GameEvents.OnPlayerJoined, id);
+    this.events.emit('player_joined', id);
   }
 
   spawnCharacter(owner: string, config: CharacterConfig) {
@@ -34,11 +33,11 @@ export class MatchState extends Schema implements IMatchState {
       .characters.set(`${owner}_${config.name}`, character);
     this.allCharacters.push(character);
 
-    this.events.emit(GameEvents.OnCharacterSpawned, character);
+    this.events.emit('character_spawned', character);
   }
 
   startMatch() {
-    this.events.emit(GameEvents.OnMatchStarted);
+    this.events.emit('match_started');
     console.log('Match Started');
 
     this.turnState.startTurns();

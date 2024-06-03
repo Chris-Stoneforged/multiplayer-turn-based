@@ -1,8 +1,7 @@
 import { Schema, type } from '@colyseus/schema';
-import { EventEmitter } from 'stream';
-import GameEvents from '../game/gameEvents';
 import { CharacterState } from './characterState';
 import { ITurnState } from '@multiplayer-turn-based/common';
+import MatchEventBus from '../game/gameEvents';
 
 export default class TurnState extends Schema implements ITurnState {
   @type('string') currentCharacterTurn: string;
@@ -13,9 +12,9 @@ export default class TurnState extends Schema implements ITurnState {
   private playerTurnIndex: number;
   private characterTurnIndex: number;
 
-  private events: EventEmitter;
+  private events: MatchEventBus;
 
-  constructor(events: EventEmitter) {
+  constructor(events: MatchEventBus) {
     super();
 
     this.events = events;
@@ -24,10 +23,10 @@ export default class TurnState extends Schema implements ITurnState {
     this.characterTurnIndex = 0;
     this.charactersByPlayer = new Map<string, string[]>();
 
-    this.events.on(GameEvents.OnPlayerJoined, (player: string) =>
+    this.events.on('player_joined', (player: string) =>
       this.onPlayerJoined(player)
     );
-    this.events.on(GameEvents.OnCharacterSpawned, (character: CharacterState) =>
+    this.events.on('character_spawned', (character: CharacterState) =>
       this.onCharacterSpawned(character)
     );
   }
@@ -45,8 +44,9 @@ export default class TurnState extends Schema implements ITurnState {
   }
 
   startTurns() {
+    // Random starting player
+    this.playerTurnIndex = Math.floor(Math.random() * this.players.length);
     this.setTurn();
-    this.events.emit(GameEvents.OnTurnStarted, this.currentCharacterTurn);
   }
 
   isPlayersTurn(player: string): boolean {
@@ -54,7 +54,11 @@ export default class TurnState extends Schema implements ITurnState {
   }
 
   endCurrentTurn() {
-    this.events.emit(GameEvents.OnTurnEnded, this.currentCharacterTurn);
+    this.events.emit(
+      'turn_ended',
+      this.currentPlayerTurn,
+      this.currentCharacterTurn
+    );
 
     this.characterTurnIndex++;
     const numCharacters = this.charactersByPlayer.get(
@@ -70,7 +74,6 @@ export default class TurnState extends Schema implements ITurnState {
     }
 
     this.setTurn();
-    this.events.emit(GameEvents.OnTurnStarted, this.currentCharacterTurn);
   }
 
   private setTurn() {
@@ -79,5 +82,11 @@ export default class TurnState extends Schema implements ITurnState {
       this.currentPlayerTurn
     );
     this.currentCharacterTurn = currentTurnCharacters[this.characterTurnIndex];
+
+    this.events.emit(
+      'turn_started',
+      this.currentPlayerTurn,
+      this.currentCharacterTurn
+    );
   }
 }
