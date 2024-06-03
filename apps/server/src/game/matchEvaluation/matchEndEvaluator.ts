@@ -24,5 +24,5 @@ export function standardMatchEndEvaluator(
     onMatchOver(winnerId);
   };
 
-  room.state.events.on(GameEvents.OnCharacterDied, OnCharacterDied);
+  room.state.events.on('character_died', OnCharacterDied);
 }

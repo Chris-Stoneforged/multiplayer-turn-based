@@ -48,8 +48,8 @@ export class CharacterState extends Schema implements ICharacterState {
   takeDamage(damage: number) {
     this.health.removeResource(damage);
     if (this.health.currentValue <= 0) {
-      this.match.events.emit(GameEvents.OnCharacterDied, this);
       this.isAlive = false;
+      this.match.events.emit('character_died', this);
     }
   }
 }
