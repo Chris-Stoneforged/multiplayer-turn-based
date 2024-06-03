@@ -1,6 +1,6 @@
 import { CharacterState } from '../../schemas/characterState';
-import { TargetConfig } from '../targeting/targetTypes';
 import ActionState from '../../schemas/actionState';
+import { TargetConfig } from '../gameTypes';
 
 export default class Fireball extends ActionState {
   id = 'fireball';

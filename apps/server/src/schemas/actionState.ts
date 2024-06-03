@@ -1,9 +1,9 @@
 import { Schema, type } from '@colyseus/schema';
-import { TargetConfig, TargetData } from '../game/targeting/targetTypes';
 import { resolveTargets } from '../game/targeting/targetResolver';
 import { MatchState } from './matchState';
 import { CharacterState } from './characterState';
 import { IActionState } from '@multiplayer-turn-based/common';
+import { TargetConfig, TargetData } from '../game/gameTypes';
 
 export default abstract class ActionState
   extends Schema

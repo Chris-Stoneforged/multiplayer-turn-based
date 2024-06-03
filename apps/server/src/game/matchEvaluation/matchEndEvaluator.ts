@@ -1,4 +1,3 @@
-import GameEvents from '../gameEvents';
 import { CharacterState } from '../../schemas/characterState';
 import { MatchState } from '../../schemas/matchState';
 import { Room } from 'colyseus';
