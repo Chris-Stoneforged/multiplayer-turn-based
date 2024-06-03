@@ -2,7 +2,6 @@ import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
 import gameConfig from '@multiplayer-turn-based/common';
 import { CharacterConfig } from '../game/config/characterConfig';
-import EventEmitter from 'events';
 import { standardMatchEndEvaluator } from '../game/matchEvaluation/matchEndEvaluator';
 
 export class MatchRoom extends Room<MatchState> {
@@ -10,19 +9,15 @@ export class MatchRoom extends Room<MatchState> {
   currentClients = 0;
 
   onCreate() {
-    // Match end handling
-    const events = new EventEmitter();
-    standardMatchEndEvaluator(events, (winner: string) =>
-      this.gameEnded(winner)
-    );
-
-    this.setState(new MatchState(null, events));
+    this.setState(new MatchState(null));
     this.onMessage('end_turn', (client, message) => {
       this.handleEndTurn(client, message);
     });
     this.onMessage('use_action', (client, message) => {
       this.handleCastAction(client, message);
     });
+
+    standardMatchEndEvaluator(this, (winner: string) => this.gameEnded(winner));
   }
 
   onJoin(client: Client, options: any) {
@@ -59,7 +54,6 @@ export class MatchRoom extends Room<MatchState> {
   }
 
   gameEnded(winnerId: string) {
-    console.log(winnerId);
     const playerIds = Array.from(this.state.players.keys());
     playerIds.forEach((client) =>
       this.clients.getById(client).send('match_ended', winnerId)

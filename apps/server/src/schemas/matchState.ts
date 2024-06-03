@@ -14,10 +14,10 @@ export class MatchState extends Schema implements IMatchState {
   allCharacters: CharacterState[] = [];
   events: EventEmitter;
 
-  constructor(config: GameConfig, events: EventEmitter) {
+  constructor(config: GameConfig) {
     super();
 
-    this.events = events;
+    this.events = new EventEmitter();
     this.turnState = new TurnState(this.events);
   }
 
