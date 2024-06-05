@@ -1,14 +1,19 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
 import { MatchState } from './matchState';
 import ActionState from './actionState';
-import { createActionFromId } from '../game/actions/actionFactory';
 import { ICharacterState } from '@multiplayer-turn-based/common';
-import ResourceState from './resourceState';
-import { CharacterConfig, CharacterType, TargetData } from '../game/gameTypes';
+import ResourceState, { HealthState } from './resourceState';
+import {
+  CharacterConfig,
+  CharacterType,
+  TargetData,
+} from '@multiplayer-turn-based/common';
+import ResourcesState from './resourcesState';
 
 export class CharacterState extends Schema implements ICharacterState {
   @type('string') name: string;
-  @type(ResourceState) health: ResourceState;
+  @type(HealthState) health: HealthState;
+  @type(ResourcesState) resources: ResourcesState;
   @type({ map: ActionState }) actions = new MapSchema<ActionState>();
   @type('boolean') isAlive: boolean;
 
@@ -22,7 +27,8 @@ export class CharacterState extends Schema implements ICharacterState {
 
     this.name = config.name;
     this.owner = owner;
-    this.health = new ResourceState(config.maxHealth);
+    this.health = new HealthState(config.maxHealth);
+    this.resources = new ResourcesState({ manaValue: config.maxMana });
     this.id = `${owner}_${config.name}`;
     this.class = config.type;
     this.isAlive = true;
@@ -30,7 +36,7 @@ export class CharacterState extends Schema implements ICharacterState {
 
     // Create Actions from Id
     config.actions.forEach((actionId) => {
-      this.actions.set(actionId, createActionFromId(actionId, state));
+      this.actions.set(actionId, new ActionState(actionId, this.match));
     });
   }
 
@@ -40,7 +46,12 @@ export class CharacterState extends Schema implements ICharacterState {
       throw new Error(`No action with ID ${actionId}`);
     }
 
+    if (!this.resources.canAffordCost(action.definition.cost)) {
+      throw new Error(`Can't afford action ${actionId}`);
+    }
+
     action.cast(this, targetData);
+    this.resources.subtractCost(action.definition.cost);
   }
 
   takeDamage(damage: number) {

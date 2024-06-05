@@ -8,7 +8,7 @@ export default class ResourceState extends Schema implements IResourceState {
   constructor(maxValue: number) {
     super();
     this.maxValue = maxValue;
-    this.currentValue = this.maxValue;
+    this.reset();
   }
 
   giveResource(amount: number) {
@@ -18,4 +18,10 @@ export default class ResourceState extends Schema implements IResourceState {
   removeResource(amount: number) {
     this.currentValue -= amount;
   }
+
+  reset() {
+    this.currentValue = this.maxValue;
+  }
 }
+
+export class HealthState extends ResourceState {}

@@ -2,41 +2,34 @@ import { Schema, type } from '@colyseus/schema';
 import { resolveTargets } from '../game/targeting/targetResolver';
 import { MatchState } from './matchState';
 import { CharacterState } from './characterState';
-import { IActionState } from '@multiplayer-turn-based/common';
-import { TargetConfig, TargetData } from '../game/gameTypes';
+import {
+  IActionDefinition,
+  IActionState,
+} from '@multiplayer-turn-based/common';
+import { TargetData } from '@multiplayer-turn-based/common';
+import { getActionDefinitionById } from '../game/actions/actionRegistry';
 
-export default abstract class ActionState
-  extends Schema
-  implements IActionState
-{
-  @type('string') abstract id: string;
+export default class ActionState extends Schema implements IActionState {
+  @type('string') id: string;
   @type('number') cooldown: number;
 
-  protected abstract targetConfig: TargetConfig;
+  definition: IActionDefinition;
+  game: MatchState;
 
-  protected game: MatchState;
-
-  constructor(match: MatchState) {
+  constructor(id: string, match: MatchState) {
     super();
+    this.id = id;
+    this.definition = getActionDefinitionById(id);
     this.game = match;
-  }
-
-  canCast(caster: CharacterState): boolean {
-    return true;
   }
 
   cast(caster: CharacterState, targetData: TargetData): void {
     const targets = resolveTargets(
       this.game,
       caster,
-      this.targetConfig,
+      this.definition.target,
       targetData.selectedTargets
     );
-    this.onCast(caster, targets);
+    this.definition.cast(caster, targets);
   }
-
-  protected abstract onCast(
-    caster: CharacterState,
-    targets: CharacterState[]
-  ): void;
 }

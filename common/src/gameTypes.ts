@@ -1,3 +1,5 @@
+import { ICharacterState } from './stateDefinitions';
+
 export type TargetType =
   | 'Selected'
   | 'Random'
@@ -5,13 +7,13 @@ export type TargetType =
   | 'All'
   | 'Self';
 
-export type TargetClass = 'Hero' | 'Minion' | 'All';
-
+export type CharacterType = 'Hero' | 'Minion';
+export type TargetCharacterType = CharacterType | 'All';
 export type TargetAlliance = 'Friendly' | 'Enemy' | 'All';
 
 export type TargetConfig = {
   targetType: TargetType;
-  targetClass: TargetClass;
+  targetClass: TargetCharacterType;
   targetAlliance: TargetAlliance;
   targetCount: number;
 };
@@ -20,16 +22,20 @@ export type TargetData = {
   selectedTargets: string[];
 };
 
-export type CharacterType = 'Hero' | 'Minion';
-
 export type CharacterConfig = {
   name: string;
   type: CharacterType;
   maxHealth: number;
+  maxMana: number;
   actions: string[];
 };
 
-export default interface IActionDefintion {
+export type ResourceValues = {
+  manaValue?: number;
+};
+
+export interface IActionDefinition {
   target: TargetConfig;
-  // TODO:
+  cost: ResourceValues;
+  cast: (caster: ICharacterState, targets: ICharacterState[]) => void;
 }

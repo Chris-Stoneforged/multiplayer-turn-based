@@ -2,7 +2,7 @@ import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
 import gameConfig from '@multiplayer-turn-based/common';
 import { standardMatchEndEvaluator } from '../game/matchEvaluation/matchEndEvaluator';
-import { CharacterConfig } from '../game/gameTypes';
+import { CharacterConfig } from '@multiplayer-turn-based/common';
 
 export class MatchRoom extends Room<MatchState> {
   maxClients = gameConfig.numPlayers;

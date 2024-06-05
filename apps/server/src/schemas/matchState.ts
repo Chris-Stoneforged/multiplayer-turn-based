@@ -2,9 +2,12 @@ import { Schema, MapSchema, type } from '@colyseus/schema';
 import { CharacterState } from './characterState';
 import TurnState from './turnState';
 import { PlayerState } from './playerState';
-import { GameConfig, IMatchState } from '@multiplayer-turn-based/common';
+import {
+  CharacterConfig,
+  GameConfig,
+  IMatchState,
+} from '@multiplayer-turn-based/common';
 import MatchEventBus from '../game/gameEvents';
-import { CharacterConfig } from '../game/gameTypes';
 
 export class MatchState extends Schema implements IMatchState {
   @type({ map: PlayerState }) players = new MapSchema<PlayerState>();

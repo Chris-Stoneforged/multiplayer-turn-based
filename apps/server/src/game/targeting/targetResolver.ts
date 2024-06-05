@@ -1,6 +1,11 @@
 import { CharacterState } from '../../schemas/characterState';
 import { MatchState } from '../../schemas/matchState';
-import { TargetAlliance, TargetClass, TargetConfig } from '../gameTypes';
+import {
+  CharacterType,
+  TargetAlliance,
+  TargetCharacterType,
+  TargetConfig,
+} from '@multiplayer-turn-based/common';
 
 export function resolveTargets(
   game: MatchState,
@@ -61,7 +66,7 @@ function filterCharacterAlliance(
 
 function filterCharacterClass(
   character: CharacterState,
-  targetClass: TargetClass
+  targetClass: TargetCharacterType
 ): boolean {
   switch (targetClass) {
     case 'All':
