@@ -17,17 +17,6 @@ export default class ResourcesState extends Schema {
     }
   }
 
-  canAffordCost(resources: ResourceValues): boolean {
-    if (
-      resources.manaValue !== undefined &&
-      this.mana.currentValue < resources.manaValue
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
   resetResources() {
     this.mana.reset();
   }

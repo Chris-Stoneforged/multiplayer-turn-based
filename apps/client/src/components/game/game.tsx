@@ -7,7 +7,6 @@ import PlayerDetails from '../characterDetails/playerDetails';
 import ActionSection from '../abilities/actionSection';
 import Match, { MatchContext } from '../../game/match';
 import GameOverScreen from './gameOverScreen';
-import { useState } from 'react';
 
 type GameProps = {
   room: Room<IMatchState>;
@@ -23,17 +22,11 @@ export default function Game({ room, returnToLobby }: GameProps) {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div className="left_section">
             <PlayerDetails player={game.player} />
-            <CharacterContainer
-              characters={game.playerCharacters}
-              alightLeft={true}
-            />
+            <CharacterContainer characters={game.playerCharacters} />
           </div>
           <div className="right_section">
             <PlayerDetails player={game.opponent} />
-            <CharacterContainer
-              characters={game.opponent.characters}
-              alightLeft={false}
-            />
+            <CharacterContainer characters={game.opponent.characters} />
           </div>
         </div>
         <ActionSection />

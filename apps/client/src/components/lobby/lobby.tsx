@@ -2,7 +2,7 @@ import './lobby.css';
 import React, { useState } from 'react';
 import client from '../../colyseusClient';
 import { Room } from 'colyseus.js';
-import gameConfig from '@multiplayer-turn-based/common';
+import gameConfig, { JoinOptions } from '@multiplayer-turn-based/common';
 
 export type LobbyProps = {
   matchJoinedCallback: (room: Room) => void;
@@ -13,13 +13,14 @@ export default function Lobby({ matchJoinedCallback }: LobbyProps) {
   const [lobbyState, setlobbyState] = useState<LobbyState>('None');
 
   // TODO: Turnt this into a form of sorts
-  const joinOptions = {
-    config: [
+  const joinOptions: JoinOptions = {
+    characters: [
       {
         name: 'Bob',
         type: 'Hero',
         maxHealth: 10,
-        actions: ['fireball', 'icebolt'],
+        maxMana: 3,
+        actions: ['fireball'],
       },
     ],
   };

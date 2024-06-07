@@ -14,11 +14,16 @@ export interface ICharacterState extends ISchema {
   name: string;
   health: IResourceState;
   actions: Map<string, IActionState>;
+  resources: IResourcesState;
 }
 
 export interface IPlayerState {
   name: string;
   characters: Map<string, ICharacterState>;
+}
+
+export interface IResourcesState extends ISchema {
+  mana: IResourceState;
 }
 
 export interface IResourceState extends ISchema {

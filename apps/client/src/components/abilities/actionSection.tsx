@@ -55,6 +55,7 @@ export default function ActionSection() {
         {actions.map((action: IActionState) => (
           <ActionButton
             key={action.id}
+            caster={character}
             action={action}
             enabled={enabled}
             handleClick={onButtonClick}

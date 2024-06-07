@@ -1,8 +1,11 @@
 import { Schema, MapSchema, type } from '@colyseus/schema';
 import { MatchState } from './matchState';
 import ActionState from './actionState';
-import { ICharacterState } from '@multiplayer-turn-based/common';
-import ResourceState, { HealthState } from './resourceState';
+import {
+  ICharacterState,
+  canAffordAction,
+} from '@multiplayer-turn-based/common';
+import { HealthState } from './resourceState';
 import {
   CharacterConfig,
   CharacterType,
@@ -38,6 +41,18 @@ export class CharacterState extends Schema implements ICharacterState {
     config.actions.forEach((actionId) => {
       this.actions.set(actionId, new ActionState(actionId, this.match));
     });
+
+    this.match.events.addListener(
+      'turn_started',
+      (playerId: string, characterId: string) =>
+        this.onTurnStarted(playerId, characterId)
+    );
+  }
+
+  onTurnStarted(playerId: string, characterId: string) {
+    if (characterId === this.id) {
+      this.resources.resetResources();
+    }
   }
 
   castAction(actionId: string, targetData: TargetData) {
@@ -46,7 +61,7 @@ export class CharacterState extends Schema implements ICharacterState {
       throw new Error(`No action with ID ${actionId}`);
     }
 
-    if (!this.resources.canAffordCost(action.definition.cost)) {
+    if (!canAffordAction(this, action.definition)) {
       throw new Error(`Can't afford action ${actionId}`);
     }
 

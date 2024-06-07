@@ -1,5 +1,5 @@
+import { IActionDefinition } from '../gameTypes';
 import { fireball } from './fireball';
-import { IActionDefinition } from '@multiplayer-turn-based/common';
 
 const actionDefinitions: { [id: string]: IActionDefinition } = {
   fireball: fireball,

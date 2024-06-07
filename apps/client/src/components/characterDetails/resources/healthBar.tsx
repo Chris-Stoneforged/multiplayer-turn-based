@@ -4,13 +4,9 @@ import { IResourceState } from '@multiplayer-turn-based/common';
 
 type HealthBarProps = {
   health: IResourceState;
-  alighnLeft: boolean;
 };
 
-export default function HealthBar({
-  health,
-  alighnLeft: alightLeft,
-}: HealthBarProps) {
+export default function HealthBar({ health }: HealthBarProps) {
   const [currentHealth, setCurrentHealth] = useState(health.currentValue);
   const [currentMaxHealth, setCurrentMaxHealth] = useState(health.maxValue);
 

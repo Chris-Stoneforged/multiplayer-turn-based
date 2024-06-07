@@ -5,9 +5,9 @@ import { CharacterState } from './characterState';
 import {
   IActionDefinition,
   IActionState,
+  getActionDefinitionById,
 } from '@multiplayer-turn-based/common';
 import { TargetData } from '@multiplayer-turn-based/common';
-import { getActionDefinitionById } from '../game/actions/actionRegistry';
 
 export default class ActionState extends Schema implements IActionState {
   @type('string') id: string;
@@ -30,6 +30,6 @@ export default class ActionState extends Schema implements IActionState {
       this.definition.target,
       targetData.selectedTargets
     );
-    this.definition.cast(caster, targets);
+    //this.definition.cast(caster, targets);
   }
 }

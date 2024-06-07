@@ -22,6 +22,10 @@ export type TargetData = {
   selectedTargets: string[];
 };
 
+export type JoinOptions = {
+  characters: CharacterConfig[];
+};
+
 export type CharacterConfig = {
   name: string;
   type: CharacterType;
@@ -37,5 +41,4 @@ export type ResourceValues = {
 export interface IActionDefinition {
   target: TargetConfig;
   cost: ResourceValues;
-  cast: (caster: ICharacterState, targets: ICharacterState[]) => void;
 }
