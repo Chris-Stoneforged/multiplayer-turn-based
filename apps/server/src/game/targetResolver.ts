@@ -1,5 +1,5 @@
-import { CharacterState } from '../../schemas/characterState';
-import { MatchState } from '../../schemas/matchState';
+import { CharacterState } from '../schemas/characterState';
+import { MatchState } from '../schemas/matchState';
 import {
   CharacterType,
   TargetAlliance,

@@ -35,7 +35,6 @@ export default function ResourceBar({
   }
 
   const items = Array.from({ length: currentResourceAmount });
-  console.log(items.length);
 
   return (
     <div className="resource_list">

@@ -52,6 +52,9 @@ export class CharacterState extends Schema implements ICharacterState {
   onTurnStarted(playerId: string, characterId: string) {
     if (characterId === this.id) {
       this.resources.resetResources();
+      this.actions.forEach((value: ActionState, key: string) => {
+        value.reduceCooldown();
+      });
     }
   }
 
@@ -63,6 +66,10 @@ export class CharacterState extends Schema implements ICharacterState {
 
     if (!canAffordAction(this, action.definition)) {
       throw new Error(`Can't afford action ${actionId}`);
+    }
+
+    if (action.cooldown > 0) {
+      throw new Error(`Action ${actionId} is still on cooldown`);
     }
 
     action.cast(this, targetData);

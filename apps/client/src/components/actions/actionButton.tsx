@@ -32,8 +32,15 @@ export default function ActionButton({
   }
 
   const [canAfford, setCanAfford] = useState(true);
+  const [cooldown, setCooldown] = useState(0);
 
   useEffect(() => {
+    const actionUnListen = action.listen(
+      'cooldown',
+      (value: number, previousValue: number) => {
+        setCooldown(value);
+      }
+    );
     const manaChangedUnlisten = caster.resources.mana.listen(
       'currentValue',
       () => {
@@ -48,6 +55,7 @@ export default function ActionButton({
     );
     return () => {
       manaChangedUnlisten();
+      actionUnListen();
     };
   });
 
@@ -57,16 +65,36 @@ export default function ActionButton({
     throw new Error(`Action with id ${action.id} has no view definition`);
   }
 
+  const boxShadowString = !enabled
+    ? ''
+    : `0 0 5px 2px rgba(${canAfford && cooldown === 0 ? '0' : '255'}, ${
+        canAfford && cooldown === 0 ? '255' : '0'
+      }, 0, 0.5)`;
+
+  const actionDefinition: IActionDefinition | undefined =
+    getActionDefinitionById(action.id);
+  if (actionDefinition === undefined) {
+    throw new Error(`Action with id ${action.id} has no definition`);
+  }
+  const fillPercentage =
+    cooldown > 0 ? `${(cooldown / actionDefinition.cooldown) * 100}%` : '100%';
+
   return (
     <button
-      disabled={!enabled || !canAfford}
+      disabled={!enabled || !canAfford || cooldown > 0}
       className="action_button"
       onClick={() => {
         handleClick(action.id);
       }}
       style={{
         backgroundImage: `url(${actionViewDefinition.image})`,
+        boxShadow: boxShadowString,
       }}
-    />
+    >
+      <span>{cooldown === 0 ? '' : cooldown}</span>
+      {(!enabled || !canAfford || cooldown > 0) && (
+        <div className="overlay" style={{ height: fillPercentage }} />
+      )}
+    </button>
   );
 }

@@ -41,4 +41,5 @@ export type ResourceValues = {
 export interface IActionDefinition {
   target: TargetConfig;
   cost: ResourceValues;
+  cooldown: number;
 }

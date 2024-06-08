@@ -11,4 +11,6 @@ export const fireball: IActionDefinition = {
   cost: {
     manaValue: 2,
   },
+
+  cooldown: 2,
 };

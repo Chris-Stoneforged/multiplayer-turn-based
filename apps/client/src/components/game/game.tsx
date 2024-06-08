@@ -4,7 +4,7 @@ import TurnButton from './turnButton';
 import { IMatchState } from '@multiplayer-turn-based/common';
 import { Room } from 'colyseus.js';
 import PlayerDetails from '../characterDetails/playerDetails';
-import ActionSection from '../abilities/actionSection';
+import ActionSection from '../actions/actionSection';
 import Match, { MatchContext } from '../../game/match';
 import GameOverScreen from './gameOverScreen';
 

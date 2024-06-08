@@ -1,6 +1,6 @@
-import { CharacterState } from '../../schemas/characterState';
-import { MatchState } from '../../schemas/matchState';
 import { Room } from 'colyseus';
+import { CharacterState } from '../schemas/characterState';
+import { MatchState } from '../schemas/matchState';
 
 export function standardMatchEndEvaluator(
   room: Room<MatchState>,
