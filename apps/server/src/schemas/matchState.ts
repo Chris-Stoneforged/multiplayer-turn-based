@@ -3,8 +3,8 @@ import { CharacterState } from './characterState';
 import TurnState from './turnState';
 import { PlayerState } from './playerState';
 import {
-  CharacterConfig,
   GameConfig,
+  ICharacterDefinition,
   IMatchState,
 } from '@multiplayer-turn-based/common';
 import MatchEventBus from '../game/gameEvents';
@@ -28,12 +28,12 @@ export class MatchState extends Schema implements IMatchState {
     this.events.emit('player_joined', id);
   }
 
-  spawnCharacter(owner: string, config: CharacterConfig) {
+  spawnCharacter(owner: string, config: ICharacterDefinition) {
     const character = new CharacterState(this, owner, config);
 
     this.players
       .get(owner)
-      .characters.set(`${owner}_${config.name}`, character);
+      .characters.set(`${character.instanceId}`, character);
     this.allCharacters.push(character);
 
     this.events.emit('character_spawned', character);

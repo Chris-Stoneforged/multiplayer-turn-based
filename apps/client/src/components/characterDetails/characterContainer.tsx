@@ -16,7 +16,7 @@ export default function characterContainer({
     <ul className="vertical_list">
       {characterArray.map((character: ICharacterState) => (
         <CharacterDetails
-          key={character.name}
+          key={character.instanceId}
           character={character}
         ></CharacterDetails>
       ))}

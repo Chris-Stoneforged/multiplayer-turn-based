@@ -39,7 +39,7 @@ export default class TurnState extends Schema implements ITurnState {
   onCharacterSpawned(character: CharacterState) {
     const turnCharacters = this.charactersByPlayer.get(character.owner);
     if (turnCharacters) {
-      turnCharacters.push(character.id);
+      turnCharacters.push(character.instanceId);
     }
   }
 

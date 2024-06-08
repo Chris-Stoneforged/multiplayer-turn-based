@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './turnButton.css';
-import Match, { MatchContext } from '../../game/match';
+import Match, { MatchContext } from '../../viewDefinitions/match';
 
 export default function TurnButton() {
   const match: Match | undefined = useContext(MatchContext);

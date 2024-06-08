@@ -1,12 +1,14 @@
 import { IActionDefinition } from '../gameTypes';
 import { fireball } from './fireball';
 
-const actionDefinitions: { [id: string]: IActionDefinition } = {
+const actionDefinitions = {
   fireball: fireball,
 };
 
+export type ActionId = keyof typeof actionDefinitions;
+
 export function getActionDefinitionById(
-  id: string
+  id: ActionId
 ): IActionDefinition | undefined {
   return actionDefinitions[id];
 }

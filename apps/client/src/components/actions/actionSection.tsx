@@ -2,7 +2,7 @@ import './actionSection.css';
 import { IActionState, ICharacterState } from '@multiplayer-turn-based/common';
 import React, { useContext, useEffect, useState } from 'react';
 import ActionButton from './actionButton';
-import Match, { MatchContext } from '../../game/match';
+import Match, { MatchContext } from '../../viewDefinitions/match';
 
 export default function ActionSection() {
   const match: Match | undefined = useContext(MatchContext);

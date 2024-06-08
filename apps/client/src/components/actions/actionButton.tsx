@@ -10,8 +10,8 @@ import {
 import {
   ActionViewDefinition,
   getActionViewDefinitionById,
-} from '../../game/actionDefinitions/actionDefinition';
-import Match, { MatchContext } from '../../game/match';
+} from '../../viewDefinitions/actionViewDefinitions';
+import Match, { MatchContext } from '../../viewDefinitions/match';
 
 type ActionButtonProps = {
   caster: ICharacterState;

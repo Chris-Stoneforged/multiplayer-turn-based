@@ -1,4 +1,5 @@
-import { ICharacterState } from './stateDefinitions';
+import { ActionId } from './actionDefinition/actionRegistry';
+import { CharacterId } from './characters';
 
 export type TargetType =
   | 'Selected'
@@ -23,16 +24,16 @@ export type TargetData = {
 };
 
 export type JoinOptions = {
-  characters: CharacterConfig[];
+  characters: ICharacterDefinition[];
 };
 
-export type CharacterConfig = {
-  name: string;
+export interface ICharacterDefinition {
+  id: CharacterId;
   type: CharacterType;
   maxHealth: number;
   maxMana: number;
-  actions: string[];
-};
+  actions: ActionId[];
+}
 
 export type ResourceValues = {
   manaValue?: number;

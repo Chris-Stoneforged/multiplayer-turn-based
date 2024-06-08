@@ -2,37 +2,38 @@ import { Schema, MapSchema, type } from '@colyseus/schema';
 import { MatchState } from './matchState';
 import ActionState from './actionState';
 import {
+  CharacterId,
   ICharacterState,
   canAffordAction,
 } from '@multiplayer-turn-based/common';
 import { HealthState } from './resourceState';
 import {
-  CharacterConfig,
+  ICharacterDefinition,
   CharacterType,
   TargetData,
 } from '@multiplayer-turn-based/common';
 import ResourcesState from './resourcesState';
 
 export class CharacterState extends Schema implements ICharacterState {
-  @type('string') name: string;
+  @type('string') id: CharacterId;
+  @type('string') instanceId: string;
   @type(HealthState) health: HealthState;
   @type(ResourcesState) resources: ResourcesState;
   @type({ map: ActionState }) actions = new MapSchema<ActionState>();
   @type('boolean') isAlive: boolean;
 
-  id: string;
   owner: string;
   class: CharacterType;
   match: MatchState;
 
-  constructor(state: MatchState, owner: string, config: CharacterConfig) {
+  constructor(state: MatchState, owner: string, config: ICharacterDefinition) {
     super();
 
-    this.name = config.name;
+    this.id = config.id;
     this.owner = owner;
     this.health = new HealthState(config.maxHealth);
     this.resources = new ResourcesState({ manaValue: config.maxMana });
-    this.id = `${owner}_${config.name}`;
+    this.instanceId = `${owner}_${config.id}`;
     this.class = config.type;
     this.isAlive = true;
     this.match = state;
@@ -50,7 +51,7 @@ export class CharacterState extends Schema implements ICharacterState {
   }
 
   onTurnStarted(playerId: string, characterId: string) {
-    if (characterId === this.id) {
+    if (characterId === this.instanceId) {
       this.resources.resetResources();
       this.actions.forEach((value: ActionState, key: string) => {
         value.reduceCooldown();

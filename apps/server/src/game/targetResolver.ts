@@ -1,7 +1,6 @@
 import { CharacterState } from '../schemas/characterState';
 import { MatchState } from '../schemas/matchState';
 import {
-  CharacterType,
   TargetAlliance,
   TargetCharacterType,
   TargetConfig,
@@ -27,7 +26,7 @@ export function resolveTargets(
       return getRandomUniqueTargets(validTargets, targetConfig.targetCount);
     case 'Selected':
       return validTargets.filter((character) =>
-        selectedTargets.includes(character.id)
+        selectedTargets.includes(character.instanceId)
       );
     case 'Self':
       return [caster];

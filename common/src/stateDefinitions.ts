@@ -1,4 +1,6 @@
 import { NonFunctionPropNames } from '@colyseus/schema/src/types/HelperTypes';
+import { ActionId } from './actionDefinition/actionRegistry';
+import { CharacterId } from './characters';
 
 interface ISchema {
   /// Replicates listen and onChange methods from Schema
@@ -11,7 +13,8 @@ interface ISchema {
 }
 
 export interface ICharacterState extends ISchema {
-  name: string;
+  id: CharacterId;
+  instanceId: string;
   health: IResourceState;
   actions: Map<string, IActionState>;
   resources: IResourcesState;
@@ -42,6 +45,6 @@ export interface ITurnState extends ISchema {
 }
 
 export interface IActionState extends ISchema {
-  id: string;
+  id: ActionId;
   cooldown: number;
 }

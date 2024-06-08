@@ -3,6 +3,7 @@ import { resolveTargets } from '../game/targetResolver';
 import { MatchState } from './matchState';
 import { CharacterState } from './characterState';
 import {
+  ActionId,
   IActionDefinition,
   IActionState,
   getActionDefinitionById,
@@ -11,7 +12,7 @@ import { TargetData } from '@multiplayer-turn-based/common';
 import { ActionCast, getActionCastById } from '../game/actions/actionCast';
 
 export default class ActionState extends Schema implements IActionState {
-  @type('string') id: string;
+  @type('string') id: ActionId;
   @type('number') cooldown: number;
 
   definition: IActionDefinition;
@@ -19,7 +20,7 @@ export default class ActionState extends Schema implements IActionState {
   game: MatchState;
   castLastTurn: boolean;
 
-  constructor(id: string, match: MatchState) {
+  constructor(id: ActionId, match: MatchState) {
     super();
     this.id = id;
     this.definition = getActionDefinitionById(id);

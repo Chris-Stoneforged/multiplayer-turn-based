@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './gameOverScreen.css';
-import Match, { MatchContext } from '../../game/match';
+import Match, { MatchContext } from '../../viewDefinitions/match';
 
 type GameOverScreenProps = {
   returnToLobby: () => void;

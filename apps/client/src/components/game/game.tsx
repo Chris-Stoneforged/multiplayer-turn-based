@@ -5,7 +5,7 @@ import { IMatchState } from '@multiplayer-turn-based/common';
 import { Room } from 'colyseus.js';
 import PlayerDetails from '../characterDetails/playerDetails';
 import ActionSection from '../actions/actionSection';
-import Match, { MatchContext } from '../../game/match';
+import Match, { MatchContext } from '../../viewDefinitions/match';
 import GameOverScreen from './gameOverScreen';
 
 type GameProps = {
