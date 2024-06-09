@@ -17,7 +17,7 @@ type LobbyState = 'Joining' | 'None';
 export default function Lobby({ matchJoinedCallback }: LobbyProps) {
   const [lobbyState, setlobbyState] = useState<LobbyState>('None');
   const [selectedCharacter, setSetselectedCharacter] =
-    useState<CharacterId>('Bob');
+    useState<CharacterId>('necromancer');
 
   const handleCharacterClick = (characterId: CharacterId) => {
     setSetselectedCharacter(characterId);
@@ -27,7 +27,7 @@ export default function Lobby({ matchJoinedCallback }: LobbyProps) {
     setlobbyState('Joining');
     try {
       const room: Room = await client.joinOrCreate('match_room', {
-        characters: [getCharacterDefinitionById(selectedCharacter)],
+        characters: [selectedCharacter],
       });
       let numPlayers = 0;
       room.state.players.onAdd(() => {

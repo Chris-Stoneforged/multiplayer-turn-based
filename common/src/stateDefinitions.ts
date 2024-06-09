@@ -1,6 +1,7 @@
 import { NonFunctionPropNames } from '@colyseus/schema/src/types/HelperTypes';
 import { ActionId } from './actionDefinition/actionRegistry';
 import { CharacterId } from './characters';
+import { MapSchema } from '@colyseus/schema';
 
 interface ISchema {
   /// Replicates listen and onChange methods from Schema
@@ -20,9 +21,9 @@ export interface ICharacterState extends ISchema {
   resources: IResourcesState;
 }
 
-export interface IPlayerState {
+export interface IPlayerState extends ISchema {
   name: string;
-  characters: Map<string, ICharacterState>;
+  characters: MapSchema<ICharacterState, string>;
 }
 
 export interface IResourcesState extends ISchema {

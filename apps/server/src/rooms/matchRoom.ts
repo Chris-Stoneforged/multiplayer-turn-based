@@ -1,7 +1,9 @@
 import { Client, Room } from '@colyseus/core';
 import { MatchState } from '../schemas/matchState';
-import gameConfig, { JoinOptions } from '@multiplayer-turn-based/common';
-import { ICharacterDefinition } from '@multiplayer-turn-based/common';
+import gameConfig, {
+  CharacterId,
+  JoinOptions,
+} from '@multiplayer-turn-based/common';
 import { standardMatchEndEvaluator } from '../game/matchEndEvaluator';
 
 export class MatchRoom extends Room<MatchState> {
@@ -24,8 +26,8 @@ export class MatchRoom extends Room<MatchState> {
     console.log(`Client ${client.sessionId} joined`);
 
     this.state.registerPlayer(client.sessionId);
-    options.characters.forEach((config: ICharacterDefinition) => {
-      this.state.spawnCharacter(client.sessionId, config);
+    options.characters.forEach((character: CharacterId) => {
+      this.state.spawnCharacter(client.sessionId, character);
     });
 
     this.currentClients++;

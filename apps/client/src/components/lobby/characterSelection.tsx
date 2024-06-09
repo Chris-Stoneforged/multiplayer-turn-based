@@ -15,7 +15,6 @@ export default function CharacterSelection({
   handleClick,
 }: CharacterSelectionProps) {
   const characterView = getCharacterViewDefinitionById(characterId);
-
   const boxShadowString = !selected ? '' : '0 0 5px 2px rgba(0, 255, 0, 1)';
 
   return (

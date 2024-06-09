@@ -1,24 +1,33 @@
 import { ICharacterDefinition } from './gameTypes';
 
-const bob: ICharacterDefinition = {
-  id: 'Bob',
+const necromancer: ICharacterDefinition = {
+  id: 'necromancer',
   type: 'Hero',
   maxHealth: 12,
   maxMana: 2,
-  actions: ['fireball'],
+  actions: ['raiseDead'],
 };
 
-const jim: ICharacterDefinition = {
-  id: 'Jim',
+const pyromancer: ICharacterDefinition = {
+  id: 'pyromancer',
   type: 'Hero',
   maxHealth: 10,
   maxMana: 3,
   actions: ['fireball'],
 };
 
+const zombie: ICharacterDefinition = {
+  id: 'zombie',
+  type: 'Minion',
+  maxHealth: 3,
+  maxMana: 0,
+  actions: ['fireball'],
+};
+
 export const characterDefinitions = {
-  Bob: bob,
-  Jim: jim,
+  necromancer: necromancer,
+  pyromancer: pyromancer,
+  zombie: zombie,
 };
 
 export type CharacterId = keyof typeof characterDefinitions;

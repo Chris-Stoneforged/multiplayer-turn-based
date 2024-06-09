@@ -24,7 +24,7 @@ export type TargetData = {
 };
 
 export type JoinOptions = {
-  characters: ICharacterDefinition[];
+  characters: CharacterId[];
 };
 
 export interface ICharacterDefinition {
@@ -40,7 +40,7 @@ export type ResourceValues = {
 };
 
 export interface IActionDefinition {
-  target: TargetConfig;
+  target?: TargetConfig;
   cost: ResourceValues;
   cooldown: number;
 }

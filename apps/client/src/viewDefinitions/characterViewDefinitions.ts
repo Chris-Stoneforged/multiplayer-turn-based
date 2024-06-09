@@ -1,6 +1,7 @@
 import { CharacterId } from '@multiplayer-turn-based/common';
-import BobIcon from '../assets/placeholder_portrait_1.png';
-import JimIcon from '../assets/placeholder_portrait_2.png';
+import NecromancerIcon from '../assets/characterPortraits/placeholder_portrait_necromancer.png';
+import PyromancerIcon from '../assets/characterPortraits/placeholder_portrait_pyromancer.png';
+import ZombieIcon from '../assets/characterPortraits/placeholder_portrait_zombie.png';
 
 export type CharacterViewDefinition = {
   name: string;
@@ -8,13 +9,17 @@ export type CharacterViewDefinition = {
 };
 
 const characterViewDefinitions: { [id: string]: CharacterViewDefinition } = {
-  Bob: {
-    name: 'Bob',
-    image: BobIcon,
+  necromancer: {
+    name: 'Necromancer',
+    image: NecromancerIcon,
   },
-  Jim: {
-    name: 'Jim',
-    image: JimIcon,
+  pyromancer: {
+    name: 'Pyromancer',
+    image: PyromancerIcon,
+  },
+  zombie: {
+    name: 'Zombie',
+    image: ZombieIcon,
   },
 };
 

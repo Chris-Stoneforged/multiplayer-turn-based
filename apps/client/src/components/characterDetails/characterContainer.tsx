@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './characterContainer.css';
 import CharacterDetails from './characterDetails';
-import { ICharacterState } from '@multiplayer-turn-based/common';
+import { ICharacterState, IPlayerState } from '@multiplayer-turn-based/common';
 
 type CharacterContainerProps = {
-  characters: Map<string, ICharacterState>;
+  player: IPlayerState;
 };
 
-export default function characterContainer({
-  characters,
+export default function CharacterContainer({
+  player,
 }: CharacterContainerProps) {
-  const characterArray = Array.from(characters.values());
+  const [characterList, setCharacterList] = useState<ICharacterState[]>(
+    Array.from(player.characters.values())
+  );
+
+  useEffect(() => {
+    player.characters.onAdd((item: ICharacterState, key: string) => {
+      setCharacterList([...characterList, item]);
+    }, false);
+  });
 
   return (
     <ul className="vertical_list">
-      {characterArray.map((character: ICharacterState) => (
+      {characterList.map((character: ICharacterState) => (
         <CharacterDetails
           key={character.instanceId}
           character={character}

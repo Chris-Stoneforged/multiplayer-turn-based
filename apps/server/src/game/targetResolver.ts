@@ -12,6 +12,10 @@ export function resolveTargets(
   targetConfig: TargetConfig,
   selectedTargets: string[]
 ): CharacterState[] {
+  if (targetConfig === undefined) {
+    return [];
+  }
+
   const validTargets = getValidTargetsFromConfig(
     caster,
     game.allCharacters,

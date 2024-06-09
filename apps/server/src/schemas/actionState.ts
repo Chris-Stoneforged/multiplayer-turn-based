@@ -17,7 +17,7 @@ export default class ActionState extends Schema implements IActionState {
 
   definition: IActionDefinition;
   actionCast: ActionCast;
-  game: MatchState;
+  match: MatchState;
   castLastTurn: boolean;
 
   constructor(id: ActionId, match: MatchState) {
@@ -25,18 +25,18 @@ export default class ActionState extends Schema implements IActionState {
     this.id = id;
     this.definition = getActionDefinitionById(id);
     this.actionCast = getActionCastById(id);
-    this.game = match;
+    this.match = match;
   }
 
   cast(caster: CharacterState, targetData: TargetData): void {
     const targets = resolveTargets(
-      this.game,
+      this.match,
       caster,
       this.definition.target,
       targetData.selectedTargets
     );
 
-    this.actionCast(caster, targets);
+    this.actionCast(this.match, caster, targets);
 
     if (this.definition.cooldown > 0) {
       this.cooldown = this.definition.cooldown;

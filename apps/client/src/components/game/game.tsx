@@ -22,11 +22,11 @@ export default function Game({ room, returnToLobby }: GameProps) {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div className="left_section">
             <PlayerDetails player={game.player} />
-            <CharacterContainer characters={game.playerCharacters} />
+            <CharacterContainer player={game.player} />
           </div>
           <div className="right_section">
             <PlayerDetails player={game.opponent} />
-            <CharacterContainer characters={game.opponent.characters} />
+            <CharacterContainer player={game.opponent} />
           </div>
         </div>
         <ActionSection />
