@@ -1,0 +1,17 @@
+.character_button {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 3px;
+  border: 2px solid black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 4px;
+}
+
+.character_select {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}

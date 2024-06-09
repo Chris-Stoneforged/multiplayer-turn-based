@@ -1,6 +1,6 @@
 import { CharacterId } from '@multiplayer-turn-based/common';
 import BobIcon from '../assets/placeholder_portrait_1.png';
-import JimIcon from '../assets/placeholder_portrait_1.png';
+import JimIcon from '../assets/placeholder_portrait_2.png';
 
 export type CharacterViewDefinition = {
   name: string;
