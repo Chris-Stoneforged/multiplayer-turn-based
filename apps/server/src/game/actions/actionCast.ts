@@ -12,8 +12,9 @@ export function fireball(
   caster: CharacterState,
   targets: CharacterState[]
 ) {
-  const target = targets[0];
-  target.takeDamage(5);
+  targets.forEach((character) => {
+    character.takeDamage(5);
+  });
 }
 
 export function raiseDead(

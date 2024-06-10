@@ -10,12 +10,18 @@ export function standardMatchEndEvaluator(
     // Check if all characters belonging to this player have died
     const player = room.state.players.get(character.owner);
     const keys = Array.from(player.characters.keys());
+    let playerStillAlive = false;
+
     keys.forEach((key) => {
       const character = player.characters.get(key);
       if (character.isAlive) {
-        return;
+        playerStillAlive = true;
       }
     });
+
+    if (playerStillAlive) {
+      return;
+    }
 
     // Winner is the player that did not have their character just die
     const playerIds = Array.from(room.state.players.keys());

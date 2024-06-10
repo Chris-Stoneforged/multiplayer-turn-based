@@ -38,7 +38,9 @@ export default function HealthBar({ health }: HealthBarProps) {
       <div
         className="health-bar"
         style={{
-          width: `${(currentHealth / currentMaxHealth) * 100}%`,
+          width: `${
+            ((currentHealth < 0 ? 0 : currentHealth) / currentMaxHealth) * 100
+          }%`,
         }}
       ></div>
       <div className="health-text">

@@ -29,6 +29,9 @@ export default class TurnState extends Schema implements ITurnState {
     this.events.on('character_spawned', (character: CharacterState) =>
       this.onCharacterSpawned(character)
     );
+    this.events.on('character_died', (character: CharacterState) => {
+      this.onCharacterDied(character);
+    });
   }
 
   onPlayerJoined(player: string) {
@@ -40,6 +43,16 @@ export default class TurnState extends Schema implements ITurnState {
     const turnCharacters = this.charactersByPlayer.get(character.owner);
     if (turnCharacters) {
       turnCharacters.push(character.instanceId);
+    }
+  }
+
+  onCharacterDied(character: CharacterState) {
+    const turnCharacters = this.charactersByPlayer.get(character.owner);
+    if (turnCharacters) {
+      const index = turnCharacters.indexOf(character.instanceId, 0);
+      if (index > -1) {
+        turnCharacters.splice(index, 1);
+      }
     }
   }
 

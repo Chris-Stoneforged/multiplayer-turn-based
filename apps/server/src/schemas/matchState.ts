@@ -22,6 +22,10 @@ export class MatchState extends Schema implements IMatchState {
 
     this.events = new MatchEventBus();
     this.turnState = new TurnState(this.events);
+
+    this.events.addListener('character_died', (character: CharacterState) =>
+      this.onCharacterDied(character)
+    );
   }
 
   registerPlayer(id: string) {
@@ -39,6 +43,16 @@ export class MatchState extends Schema implements IMatchState {
     this.allCharacters.push(character);
 
     this.events.emit('character_spawned', character);
+  }
+
+  onCharacterDied(character: CharacterState) {
+    console.log('character died called from matchState');
+    this.players.get(character.owner).characters.delete(character.instanceId);
+
+    const index = this.allCharacters.indexOf(character, 0);
+    if (index > -1) {
+      this.allCharacters.splice(index, 1);
+    }
   }
 
   startMatch() {

@@ -18,6 +18,12 @@ export default function CharacterContainer({
     player.characters.onAdd((item: ICharacterState, key: string) => {
       setCharacterList([...characterList, item]);
     }, false);
+    player.characters.onRemove((item: ICharacterState, key: string) => {
+      console.log(`player removed - ${item.instanceId}`);
+      setCharacterList(
+        characterList.filter((a) => a.instanceId !== item.instanceId)
+      );
+    });
   });
 
   return (
